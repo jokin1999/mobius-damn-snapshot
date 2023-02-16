@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/jokin1999/mobius-damn-snapshot/services/bunny"
+	"github.com/jokin1999/mobius-damn-snapshot/services/database"
 	"github.com/spf13/cobra"
 )
 
@@ -12,6 +13,7 @@ func init() {
 		Use:   "server",
 		Short: "Start a mobius server.",
 		Run: func(cmd *cobra.Command, args []string) {
+			database.Init()
 			bunny.Init()
 		},
 	}

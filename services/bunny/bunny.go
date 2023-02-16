@@ -21,6 +21,7 @@ func Init() {
 
 	// run http server
 	server := &http.Server{
+		Addr:         ":8082",
 		Handler:      router,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,

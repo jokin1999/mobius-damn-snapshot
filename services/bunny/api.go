@@ -2,6 +2,7 @@ package bunny
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jokin1999/mobius-damn-snapshot/services/crust"
 )
 
 // register api v1
@@ -14,8 +15,9 @@ func apiv1(r *gin.Engine) {
 		})
 	})
 
-	// api := r.Group("/api/v1")
+	api := r.Group("/api/v1")
 	{
 		// login
+		api.POST("/reg", crust.Reguser)
 	}
 }
