@@ -17,7 +17,9 @@ func apiv1(r *gin.Engine) {
 
 	api := r.Group("/api/v1")
 	{
-		// login
+		// register
 		api.POST("/reg", crust.Reguser)
+		api.POST("/del", crust.Deluser)
+		api.POST("/login", crust.Login)
 	}
 }

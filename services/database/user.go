@@ -8,81 +8,71 @@ import (
 )
 
 // register a user
-func User_register(username string, password string, status uint) int64 {
+func User_register(username string, password string, status uint) bool {
+	// u := User_by_username(username)
+	// if u
+
 	stmt, err := DB.Prepare("INSERT INTO users(uuid, username, password, status) values (?,?,?,?);")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	uuid := uuid.New()
-	res, err := stmt.Exec(uuid.String(), username, password, status)
+	_, err = stmt.Exec(uuid.String(), username, password, status)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return false
 	}
 
-	lid, err := res.LastInsertId()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return lid
+	return true
 }
 
 // delete a user
-func User_delete_by_uuid(uuid string) int64 {
+func User_delete_by_uuid(uuid string) bool {
 	stmt, err := DB.Prepare("DELETE FROM users where uuid=?;")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
-	res, err := stmt.Exec(uuid)
+	_, err = stmt.Exec(uuid)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
-	lid, err := res.LastInsertId()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return lid
+	return true
 }
 
 // delete a user
-func User_delete_by_username(username string) int64 {
+func User_delete_by_username(username string) bool {
 	stmt, err := DB.Prepare("DELETE FROM users where username=?;")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
-	res, err := stmt.Exec(username)
+	_, err = stmt.Exec(username)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return false
 	}
 
-	lid, err := res.LastInsertId()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return lid
+	return true
 }
 
 // change password
 func User_change_password_by_username(username string, password string) int64 {
 	stmt, err := DB.Prepare("UPDATE users SET password=? where username=?;")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	res, err := stmt.Exec(password, username)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	lid, err := res.LastInsertId()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return lid
@@ -99,12 +89,12 @@ type User struct {
 func User_by_username(username string) User {
 	stmt, err := DB.Prepare("SELECT * FROM users WHERE username=?;")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	row, err := stmt.Query(username)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	var u User
