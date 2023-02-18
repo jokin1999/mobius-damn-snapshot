@@ -17,10 +17,21 @@ func apiv1(r *gin.Engine) {
 
 	api := r.Group("/api/v1")
 	{
-		// register
+		// admin
 		api.POST("/reg", mw_admin, crust.Reguser)
 		api.POST("/del", mw_admin, crust.Deluser)
-		api.POST("/del", mw_admin, crust.Deluser)
+		api.POST("/perm/add", mw_admin, crust.Permadd)
+		api.POST("/perm/del", mw_admin, crust.Permdel)
+		api.POST("/perm", mw_admin, crust.Perm)
+
+		// login
 		api.POST("/login", crust.Login)
+
+		// users
+		api.POST("/snap/rollback", mw_auth_api, crust.Login)
+
+		// rollback allow list
+		api.POST("/vms", mw_auth_api, crust.Rollback_AllowList)
+		api.POST("/rollback", mw_auth_api, crust.Rollback)
 	}
 }

@@ -100,5 +100,7 @@ func User_by_username(username string) User {
 	row.Next()
 	row.Scan(&u.Uuid, &u.Username, &u.Password, &u.Status)
 
+	defer row.Close()
+
 	return u
 }

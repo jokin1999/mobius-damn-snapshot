@@ -39,5 +39,6 @@ func mw_auth_api(c *gin.Context) {
 			"code": 401,
 		})
 		c.Abort()
+		return
 	}
 }
