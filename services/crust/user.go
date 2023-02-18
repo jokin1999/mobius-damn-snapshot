@@ -65,8 +65,7 @@ func Login(c *gin.Context) {
 
 	user := database.User_by_username(username)
 	if user.Username == username && user.Password == password {
-		// auth := genAuth(username, password)
-		auth := gen_sha256(username)
+		auth := GenAuthToken(username, password)
 		c.JSON(200, gin.H{
 			"code": 200,
 			"msg":  "",
@@ -80,7 +79,16 @@ func Login(c *gin.Context) {
 	}
 }
 
-func genAuth(username string, password string) string {
+func GenAuthToken_by_username(username string) string {
+	user := database.User_by_username(username)
+	if user.Username == username {
+		return GenAuthToken(user.Username, user.Password)
+	} else {
+		return ""
+	}
+}
+
+func GenAuthToken(username string, password string) string {
 	return gen_md5(gen_sha1(gen_md5(username) + gen_sha256(password)))
 }
 
