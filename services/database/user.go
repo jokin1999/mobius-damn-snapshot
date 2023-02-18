@@ -9,8 +9,6 @@ import (
 
 // register a user
 func User_register(username string, password string, status uint) bool {
-	// u := User_by_username(username)
-	// if u
 
 	stmt, err := DB.Prepare("INSERT INTO users(uuid, username, password, status) values (?,?,?,?);")
 	if err != nil {

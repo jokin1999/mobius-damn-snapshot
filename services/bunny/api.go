@@ -20,6 +20,7 @@ func apiv1(r *gin.Engine) {
 		// register
 		api.POST("/reg", mw_admin, crust.Reguser)
 		api.POST("/del", mw_admin, crust.Deluser)
+		api.POST("/del", mw_admin, crust.Deluser)
 		api.POST("/login", crust.Login)
 	}
 }
